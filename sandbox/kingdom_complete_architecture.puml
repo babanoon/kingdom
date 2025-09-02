@@ -1,0 +1,195 @@
+@startuml Kingdom Agent System Complete Architecture
+
+title Kingdom Agent System (Deos) - Complete Architecture
+
+package "Core Infrastructure" #lightgreen {
+  class BaseAgent {
+    +execute_task()
+    +think_about_task()
+    +assess_performance()
+    +inherit_capabilities()
+  }
+  
+  class GenAIBrain {
+    +think(prompt, context)
+    +reflect(task_result)
+    +switch_provider()
+    +get_personality()
+  }
+  
+  class AgentHands {
+    +execute_python(code)
+    +execute_sql(query)
+    +execute_bash(command)
+    +execute_api_call()
+  }
+}
+
+package "Service Infrastructure" #lightgreen {
+  class KingdomAgentService {
+    +start_service()
+    +submit_task()
+    +get_service_status()
+    +stop_service()
+  }
+  
+  class TaskQueue {
+    +put_task(task)
+    +get_task(timeout)
+    +complete_task(id)
+    +get_stats()
+  }
+  
+  class A2AMessageBus {
+    +send_message(sender, recipient)
+    +get_message(agent_id)
+    +subscribe(agent_id)
+    +get_message_stats()
+  }
+  
+  class DatabasePool {
+    +get_connection()
+    +return_connection()
+    +initialize()
+  }
+}
+
+package "Working Agents" #lightgreen {
+  class TesterAgent1 {
+    +handle_db_insert()
+    +handle_db_read()
+    +handle_db_delete()
+    +test_google_adk()
+    +send_test_message()
+  }
+  
+  class TesterAgent2 {
+    +handle_a2a_communication()
+    +handle_broadcast_test()
+    +validate_communication()
+    +get_communication_stats()
+  }
+  
+  class VazirAgent {
+    +analyze_life_decisions()
+    +create_strategic_plan()
+    +evaluate_options()
+  }
+}
+
+package "TODO Agents" #black {
+  class DataAnalystAgent {
+    +analyze_datasets()
+    +generate_insights()
+    +create_visualizations()
+  }
+  
+  class ContentCreatorAgent {
+    +generate_articles()
+    +create_posts()
+    +optimize_content()
+  }
+}
+
+package "Future Development" #orange {
+  class ResearchAgent {
+    +web_research()
+    +knowledge_synthesis()
+    +fact_checking()
+  }
+  
+  class PersonalAssistantAgent {
+    +schedule_management()
+    +email_processing()
+    +task_prioritization()
+  }
+}
+
+package "Database System" #lightgreen {
+  database PostgreSQL
+}
+
+package "Helper Tools" #lightblue {
+  class TestRunner {
+    +run_comprehensive_test()
+    +test_database_operations()
+    +test_a2a_communication()
+    +test_parallel_execution()
+  }
+  
+  class SQLRunner {
+    +execute_sql_file()
+    +delete_tables()
+    +verify_tables()
+  }
+  
+  class ServiceConfig {
+    +service_config_json
+    +database_connection
+    +agent_configuration
+  }
+}
+
+package "External APIs" #orange {
+  cloud OpenAI_API
+  cloud Claude_API
+  cloud Google_ADK
+}
+
+' Core relationships
+BaseAgent <|-- TesterAgent1
+BaseAgent <|-- TesterAgent2
+BaseAgent <|-- VazirAgent
+BaseAgent <|-- DataAnalystAgent
+BaseAgent <|-- ContentCreatorAgent
+BaseAgent <|-- ResearchAgent
+BaseAgent <|-- PersonalAssistantAgent
+
+BaseAgent --> GenAIBrain
+BaseAgent --> AgentHands
+
+' Service relationships  
+KingdomAgentService --> TaskQueue
+KingdomAgentService --> A2AMessageBus
+KingdomAgentService --> DatabasePool
+
+' Agent to service connections
+TesterAgent1 --> TaskQueue
+TesterAgent2 --> TaskQueue
+TesterAgent1 --> DatabasePool
+TesterAgent2 --> A2AMessageBus
+
+' Database connections
+DatabasePool --> PostgreSQL
+
+' External API connections
+GenAIBrain --> OpenAI_API
+GenAIBrain --> Claude_API
+TesterAgent1 --> Google_ADK
+
+' Helper tool connections
+TestRunner --> KingdomAgentService
+TestRunner --> TesterAgent1
+TestRunner --> TesterAgent2
+SQLRunner --> PostgreSQL
+ServiceConfig --> KingdomAgentService
+
+note top of TesterAgent1 : STATUS: FULLY OPERATIONAL\n- Database CRUD operations\n- A2A messaging capabilities\n- Google ADK testing framework\n- Parallel task execution\n- Complete operation logging
+
+note top of TesterAgent2 : STATUS: FULLY OPERATIONAL\n- Agent-to-Agent communication\n- Message validation & response\n- Broadcast testing\n- Communication statistics\n- Message history tracking
+
+note top of VazirAgent : STATUS: WORKING\n- GenAI-powered strategic planning\n- Life decision analysis\n- OpenAI integration ready\n- Specialized prompts & workflows
+
+note top of PostgreSQL : STATUS: WORKING\n- 19 Entity Tables operational\n- Universal core field structure\n- JSONB flexibility for data\n- Vector embedding support\n- Connection pooling active
+
+note top of TestRunner : STATUS: WORKING\n- Comprehensive test suite\n- 16 tasks completed successfully\n- Parallel agent execution verified\n- A2A communication validated\n- Database operations confirmed
+
+note as StatusLegend
+**Color Legend:**
+Green = Fully Working & Tested
+Black = TODO (Next Development Sprint)  
+Orange = Future Development Plans
+Blue = Helper Tools & Utilities
+end note
+
+@enduml

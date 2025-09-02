@@ -1,0 +1,138 @@
+@startuml Kingdom Agent System
+
+title Kingdom Agent System (Deos) - Complete Architecture
+
+skinparam class {
+    BackgroundColor<<WORKING>> lightgreen
+    BackgroundColor<<TODO>> black
+    BackgroundColor<<FUTURE>> orange  
+    BackgroundColor<<HELPER>> lightblue
+    FontColor<<TODO>> white
+}
+
+package "Core System" {
+    class BaseAgent <<WORKING>> {
+        +execute_task()
+        +think_about_task()
+        +assess_performance()
+    }
+    
+    class GenAIBrain <<WORKING>> {
+        +think(prompt)
+        +reflect(result)
+        +switch_provider()
+    }
+    
+    class AgentHands <<WORKING>> {
+        +execute_python()
+        +execute_sql()
+        +execute_bash()
+    }
+}
+
+package "Service Infrastructure" {
+    class KingdomAgentService <<WORKING>> {
+        +start_service()
+        +submit_task()
+        +stop_service()
+    }
+    
+    class TaskQueue <<WORKING>>
+    class A2AMessageBus <<WORKING>>  
+    class DatabasePool <<WORKING>>
+}
+
+package "Agents" {
+    class TesterAgent1 <<WORKING>> {
+        +db_operations()
+        +google_adk_test()
+    }
+    
+    class TesterAgent2 <<WORKING>> {
+        +a2a_communication()
+        +validate_messages()
+    }
+    
+    class VazirAgent <<WORKING>> {
+        +strategic_planning()
+        +life_analysis()
+    }
+    
+    class DataAnalyst <<TODO>> {
+        +analyze_data()
+    }
+    
+    class ContentCreator <<TODO>> {
+        +generate_content()
+    }
+    
+    class ResearchAgent <<FUTURE>> {
+        +web_research()
+    }
+}
+
+package "Database" {
+    database PostgreSQL <<WORKING>>
+}
+
+package "Tools" {
+    class TestRunner <<HELPER>> {
+        +run_tests()
+    }
+    
+    class SQLRunner <<HELPER>> {
+        +manage_db()
+    }
+}
+
+cloud OpenAI <<FUTURE>>
+cloud GoogleADK <<TODO>>
+
+' Relationships
+BaseAgent <|-- TesterAgent1
+BaseAgent <|-- TesterAgent2
+BaseAgent <|-- VazirAgent
+BaseAgent <|-- DataAnalyst
+BaseAgent <|-- ContentCreator
+BaseAgent <|-- ResearchAgent
+
+BaseAgent --> GenAIBrain
+BaseAgent --> AgentHands
+
+KingdomAgentService --> TaskQueue
+KingdomAgentService --> A2AMessageBus
+KingdomAgentService --> DatabasePool
+
+DatabasePool --> PostgreSQL
+TesterAgent1 --> PostgreSQL
+GenAIBrain --> OpenAI
+TesterAgent1 --> GoogleADK
+
+TestRunner --> KingdomAgentService
+SQLRunner --> PostgreSQL
+
+note right of TesterAgent1
+✅ FULLY OPERATIONAL
+- Database CRUD operations
+- A2A messaging
+- Google ADK testing
+- Parallel execution
+end note
+
+note right of PostgreSQL
+✅ Brain Database
+- 19 Entity Tables
+- Universal core fields
+- JSONB flexibility
+- Vector-ready
+end note
+
+note as Legend
+**Status Legend:**
+Green = Working & Tested
+Black = TODO - Next Sprint
+Orange = Future Development  
+Blue = Helper Tools
+end note
+
+@enduml

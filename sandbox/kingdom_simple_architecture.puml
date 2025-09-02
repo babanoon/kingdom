@@ -1,0 +1,178 @@
+@startuml Kingdom Agent System Architecture
+
+title Kingdom Agent System (Deos) - Architecture Overview
+
+!theme plain
+skinparam backgroundColor white
+skinparam packageStyle rectangle
+
+skinparam class {
+    BackgroundColor<<WORKING>> lightgreen
+    BackgroundColor<<TODO>> black
+    BackgroundColor<<FUTURE>> orange  
+    BackgroundColor<<HELPER>> lightblue
+    FontColor<<TODO>> white
+}
+
+package "Core Infrastructure" {
+    class GenAIBrain <<WORKING>> {
+        +think()
+        +reflect()
+        +get_personality()
+    }
+    
+    class AgentHands <<WORKING>> {
+        +execute_python()
+        +execute_sql()
+        +execute_bash()
+    }
+    
+    class BaseAgent <<WORKING>> {
+        +execute_task()
+        +assess_performance()
+    }
+    
+    class KingdomAgentService <<WORKING>> {
+        +start_service()
+        +submit_task()
+        +get_status()
+    }
+}
+
+package "Operational Agents" {
+    class TesterAgent1 <<WORKING>> {
+        +handle_db_operations()
+        +test_google_adk()
+    }
+    
+    class TesterAgent2 <<WORKING>> {
+        +handle_a2a_communication()
+        +validate_communication()
+    }
+    
+    class VazirAgent <<WORKING>> {
+        +strategic_analysis()
+        +life_planning()
+    }
+    
+    class DataAnalystAgent <<TODO>> {
+        +analyze_datasets()
+        +generate_insights()
+    }
+    
+    class ContentCreatorAgent <<TODO>> {
+        +generate_content()
+        +optimize_writing()
+    }
+    
+    class ResearchAgent <<FUTURE>> {
+        +web_research()
+        +knowledge_synthesis()
+    }
+    
+    class PersonalAssistantAgent <<FUTURE>> {
+        +schedule_management()
+        +email_processing()
+    }
+}
+
+package "Service Components" {
+    class TaskQueue <<WORKING>> {
+        +put_task()
+        +get_task()
+        +complete_task()
+    }
+    
+    class A2AMessageBus <<WORKING>> {
+        +send_message()
+        +get_message()
+        +subscribe()
+    }
+    
+    class DatabasePool <<WORKING>> {
+        +get_connection()
+        +return_connection()
+    }
+}
+
+package "Database System" {
+    database PostgreSQL <<WORKING>>
+    
+    class DatabaseSchema <<WORKING>> {
+        +19_entity_tables
+        +universal_core_fields
+        +jsonb_flexibility
+    }
+}
+
+package "Helper Tools" {
+    class TestRunner <<HELPER>> {
+        +run_comprehensive_test()
+        +validate_agents()
+    }
+    
+    class SQLRunner <<HELPER>> {
+        +execute_sql_files()
+        +manage_database()
+    }
+    
+    class ServiceConfig <<HELPER>> {
+        +configuration_management
+        +environment_setup
+    }
+}
+
+package "External APIs" {
+    cloud OpenAI_API <<FUTURE>>
+    cloud Claude_API <<FUTURE>>
+    cloud Google_ADK <<TODO>>
+}
+
+' Relationships
+BaseAgent <|-- TesterAgent1
+BaseAgent <|-- TesterAgent2  
+BaseAgent <|-- VazirAgent
+BaseAgent <|-- DataAnalystAgent
+BaseAgent <|-- ContentCreatorAgent
+BaseAgent <|-- ResearchAgent
+BaseAgent <|-- PersonalAssistantAgent
+
+BaseAgent --> GenAIBrain
+BaseAgent --> AgentHands
+
+KingdomAgentService --> TaskQueue
+KingdomAgentService --> A2AMessageBus
+KingdomAgentService --> DatabasePool
+
+DatabasePool --> PostgreSQL
+DatabaseSchema --> PostgreSQL
+
+TesterAgent1 --> DatabasePool
+TesterAgent2 --> A2AMessageBus
+TesterAgent1 --> Google_ADK
+
+GenAIBrain --> OpenAI_API
+GenAIBrain --> Claude_API
+
+TestRunner --> KingdomAgentService
+SQLRunner --> PostgreSQL
+
+note as N1
+**Legend:**
+🟢 Green = Fully Working & Tested
+⚫ Black = TODO (Next Sprint)  
+🟠 Orange = Future Development
+🔵 Blue = Helper Tools & Utils
+end note
+
+note top of TesterAgent1 : ✅ FULLY OPERATIONAL\nDatabase CRUD, A2A messaging\nGoogle ADK testing framework
+
+note top of VazirAgent : ✅ GenAI-POWERED\nStrategic planning & analysis\nOpenAI integration ready
+
+note top of DataAnalystAgent : ⚫ TODO: Data analysis\nML/AI insights generation\nVisualization capabilities
+
+note top of PostgreSQL : ✅ 19 Entity Tables\nPersons, Events, Tasks\nIdeas, Knowledge, etc.
+
+footer Kingdom Agent System - Production Ready Infrastructure\nColor Legend: 🟢 Working | ⚫ TODO | 🟠 Future | 🔵 Helpers
+
+@enduml

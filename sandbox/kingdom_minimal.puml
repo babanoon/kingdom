@@ -1,0 +1,67 @@
+@startuml Kingdom System
+
+title Kingdom Agent System Architecture
+
+skinparam backgroundColor white
+
+class BaseAgent {
+  +execute_task()
+  +think_about_task()
+}
+
+class TesterAgent1 {
+  +handle_db_operations()
+  +test_google_adk()
+}
+
+class TesterAgent2 {
+  +handle_a2a_communication()
+  +validate_messages()
+}
+
+class VazirAgent {
+  +strategic_planning()
+  +life_analysis()
+}
+
+class KingdomAgentService {
+  +start_service()
+  +submit_task()
+}
+
+class TaskQueue {
+  +put_task()
+  +get_task()
+}
+
+class A2AMessageBus {
+  +send_message()
+  +get_message()
+}
+
+database PostgreSQL
+
+class TestRunner {
+  +run_comprehensive_test()
+}
+
+BaseAgent <|-- TesterAgent1
+BaseAgent <|-- TesterAgent2
+BaseAgent <|-- VazirAgent
+
+KingdomAgentService --> TaskQueue
+KingdomAgentService --> A2AMessageBus
+TaskQueue --> TesterAgent1
+TaskQueue --> TesterAgent2
+
+TesterAgent1 --> PostgreSQL
+TesterAgent2 --> A2AMessageBus
+
+TestRunner --> KingdomAgentService
+
+note right of TesterAgent1 : Status: WORKING\nDatabase CRUD operations\nGoogle ADK testing
+note right of TesterAgent2 : Status: WORKING\nA2A communication\nMessage validation  
+note right of VazirAgent : Status: WORKING\nGenAI-powered planning
+note right of PostgreSQL : Status: WORKING\n19 Entity Tables\nBrain Database
+
+@enduml

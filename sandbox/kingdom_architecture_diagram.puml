@@ -1,0 +1,282 @@
+@startuml Kingdom Agent System Architecture
+!define WORKING_COLOR #90EE90
+!define TODO_COLOR #000000  
+!define FUTURE_COLOR #FFA500
+!define HELPER_COLOR #87CEEB
+
+title Kingdom Agent System (Deos) - Complete Architecture
+
+package "Kingdom Core Infrastructure" {
+    
+    package "Core Components" as core {
+        class GenAIBrain <<WORKING_COLOR>> {
+            +think(prompt, context, mode)
+            +reflect(task_result)
+            +get_personality()
+            +switch_provider()
+        }
+        
+        class AgentHands <<WORKING_COLOR>> {
+            +execute_python(code)
+            +execute_sql(query)  
+            +execute_bash(command)
+            +execute_api_call(endpoint)
+        }
+        
+        class BaseAgent <<WORKING_COLOR>> {
+            +execute_task(task_data)
+            +think_about_task()
+            +assess_performance()
+            +inherit_from_parent()
+        }
+        
+        class AgentRegistry <<WORKING_COLOR>> {
+            +register_agent()
+            +get_agent_info()
+            +list_agents()
+        }
+        
+        class KingdomLogger <<WORKING_COLOR>> {
+            +log_agent_activity()
+            +log_task_completion()
+            +get_performance_metrics()
+        }
+    }
+    
+    package "Service Infrastructure" as service {
+        class KingdomAgentService <<WORKING_COLOR>> {
+            +start_service()
+            +submit_task(task_type, payload)
+            +get_service_status()
+            +stop_service()
+        }
+        
+        class TaskQueue <<WORKING_COLOR>> {
+            +put_task(task)
+            +get_task(timeout)
+            +complete_task(task_id)
+            +get_stats()
+        }
+        
+        class A2AMessageBus <<WORKING_COLOR>> {
+            +send_message(sender, recipient)
+            +get_message(agent_id)
+            +subscribe(agent_id)
+            +get_message_stats()
+        }
+        
+        class DatabasePool <<WORKING_COLOR>> {
+            +get_connection()
+            +return_connection()
+            +initialize()
+            +close_all()
+        }
+    }
+    
+    package "Security & Memory" as security {
+        class AgentSecurity <<FUTURE_COLOR>> {
+            +validate_code_execution()
+            +check_permissions()
+            +sanitize_inputs()
+        }
+        
+        class DatabaseMemory <<FUTURE_COLOR>> {
+            +store_conversation()
+            +retrieve_context()
+            +update_knowledge()
+        }
+    }
+}
+
+package "Operational Agents" {
+    
+    package "Tester Agents (Infrastructure Validation)" as testers {
+        class TesterAgent1 <<WORKING_COLOR>> {
+            +handle_db_insert()
+            +handle_db_read()
+            +handle_db_delete()
+            +test_google_adk()
+            +send_test_message()
+        }
+        
+        class TesterAgent2 <<WORKING_COLOR>> {
+            +handle_a2a_communication()
+            +handle_broadcast_test()
+            +validate_communication()
+            +get_communication_stats()
+        }
+    }
+    
+    package "Strategic Agents" as strategic {
+        class VazirAgent <<WORKING_COLOR>> {
+            +analyze_life_decisions()
+            +create_strategic_plan()
+            +evaluate_options()
+            +generate_recommendations()
+        }
+        
+        class DataAnalystAgent <<TODO_COLOR>> {
+            +analyze_datasets()
+            +generate_insights()
+            +create_visualizations()
+            +statistical_modeling()
+        }
+        
+        class ContentCreatorAgent <<TODO_COLOR>> {
+            +generate_articles()
+            +create_social_media_posts()
+            +write_documentation()
+            +content_optimization()
+        }
+        
+        class ResearchAgent <<FUTURE_COLOR>> {
+            +web_research()
+            +scientific_paper_analysis()
+            +knowledge_synthesis()
+            +fact_checking()
+        }
+        
+        class PersonalAssistantAgent <<FUTURE_COLOR>> {
+            +schedule_management()
+            +email_processing()
+            +task_prioritization()
+            +reminder_system()
+        }
+    }
+}
+
+package "Brain Database System" as brain_db {
+    database PostgreSQL <<WORKING_COLOR>>
+    
+    note right of PostgreSQL : 19 Entity Tables:\npersons, organizations\nevents, conversations\ntasks, projects, ideas\nknowledge_facts, contexts\n+ 10 more tables
+    
+    class DatabaseSchema <<WORKING_COLOR>> {
+        +create_brain_tables_corrected.sql
+        +universal_core_fields
+        +jsonb_flexibility
+        +embedding_refs
+    }
+}
+
+package "Helper Tools & Utilities" as helpers {
+    class TestRunner <<HELPER_COLOR>> {
+        +run_comprehensive_test()
+        +test_database_operations()
+        +test_a2a_communication()
+        +test_parallel_execution()
+    }
+    
+    class SQLRunner <<HELPER_COLOR>> {
+        +execute_sql_file()
+        +delete_tables()
+        +verify_tables()
+        +manage_db_operations()
+    }
+    
+    class ServiceConfig <<HELPER_COLOR>> {
+        +service_config.json
+        +database_connection_params
+        +agent_configuration
+    }
+    
+    class GitVersionControl <<HELPER_COLOR>> {
+        +.gitignore
+        +commit_history
+        +version_management
+    }
+    
+    class MarkdownSystem <<HELPER_COLOR>> {
+        +communication_formatting
+        +documentation_generation()
+        +report_creation()
+    }
+}
+
+package "External Integrations" as external {
+    cloud OpenAIAPI <<FUTURE_COLOR>> {
+        GPT-4
+        GPT-3.5-turbo
+        Embeddings
+    }
+    
+    cloud ClaudeAPI <<FUTURE_COLOR>> {
+        Claude-3-Sonnet
+        Claude-3-Haiku
+    }
+    
+    cloud GeminiAPI <<FUTURE_COLOR>> {
+        Gemini-Pro
+        Gemini-Flash
+    }
+    
+    cloud GoogleADK <<TODO_COLOR>> {
+        Agent Development Kit
+        Capability Registration
+        Message Routing
+    }
+}
+
+' === RELATIONSHIPS ===
+
+' Core Infrastructure Relationships
+BaseAgent --> GenAIBrain : uses brain for thinking
+BaseAgent --> AgentHands : uses hands for execution
+BaseAgent --> KingdomLogger : logs activities
+AgentHands --> AgentSecurity : validates execution
+GenAIBrain --> OpenAIAPI : makes API calls
+GenAIBrain --> ClaudeAPI : makes API calls  
+GenAIBrain --> GeminiAPI : makes API calls
+
+' Service Infrastructure 
+KingdomAgentService --> TaskQueue : manages tasks
+KingdomAgentService --> A2AMessageBus : handles messaging
+KingdomAgentService --> DatabasePool : manages connections
+DatabasePool --> PostgreSQL : connects to database
+
+' Agent Relationships
+TesterAgent1 --|> BaseAgent : inherits from
+TesterAgent2 --|> BaseAgent : inherits from
+VazirAgent --|> BaseAgent : inherits from
+DataAnalystAgent --|> BaseAgent : inherits from
+ContentCreatorAgent --|> BaseAgent : inherits from
+ResearchAgent --|> BaseAgent : inherits from
+PersonalAssistantAgent --|> BaseAgent : inherits from
+
+' Service Agent Integration
+TesterAgent1 --> KingdomAgentService : runs in service
+TesterAgent2 --> KingdomAgentService : runs in service
+TesterAgent1 --> DatabasePool : uses for DB operations
+TesterAgent2 --> A2AMessageBus : uses for communication
+TesterAgent1 --> GoogleADK : tests integration
+
+' Database Integration
+BaseAgent --> DatabaseMemory : stores knowledge
+DatabaseMemory --> PostgreSQL : persists data
+DatabaseSchema --> PostgreSQL : defines structure
+
+' Helper Tool Relationships
+TestRunner --> KingdomAgentService : tests service
+TestRunner --> TesterAgent1 : validates agent
+TestRunner --> TesterAgent2 : validates agent
+SQLRunner --> PostgreSQL : manages database
+ServiceConfig --> KingdomAgentService : configures service
+
+' Documentation & Version Control
+GitVersionControl --> core : version control
+MarkdownSystem --> helpers : formats output
+
+note top of testers : **FULLY OPERATIONAL**\n✅ Database CRUD\n✅ A2A Communication\n✅ Parallel Execution\n✅ Service Integration
+
+note top of strategic : **Mixed Status**\n✅ Vazir (GenAI-powered)\n⚫ Data/Content Agents (TODO)\n🟠 Research/Assistant (Future)
+
+note top of core : **FULLY OPERATIONAL**\n✅ GenAI Brain System\n✅ Agent Hands\n✅ Inheritance Architecture\n✅ Complete Infrastructure
+
+note top of brain_db : **FULLY OPERATIONAL**\n✅ 19 Entity Tables\n✅ PostgreSQL Integration\n✅ JSONB Flexibility\n✅ Vector-ready
+
+note top of helpers : **FULLY OPERATIONAL**\n✅ Test Runner\n✅ SQL Runner\n✅ Git Version Control\n✅ Configuration System
+
+note top of external : **Integration Status**\n🟠 OpenAI/Claude/Gemini APIs\n⚫ Google ADK (TODO)\n🟠 Production API Keys
+
+footer Kingdom Agent System - Comprehensive Architecture\nColor Code: 🟢 Working | ⚫ TODO | 🟠 Future Development | 🔵 Helper Tools
+
+@enduml

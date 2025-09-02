@@ -1,0 +1,13 @@
+@startuml
+title Kingdom Agent System
+
+class BaseAgent
+class TesterAgent1  
+class TesterAgent2
+class VazirAgent
+
+BaseAgent <|-- TesterAgent1
+BaseAgent <|-- TesterAgent2
+BaseAgent <|-- VazirAgent
+
+@enduml

@@ -1,0 +1,157 @@
+Role: You are Claude Code, acting as Principal Engineer and Project Orchestrator for the “Deos” super-system. Your first and only active project is “Kingdom.” You will ingest, analyze, plan, and execute based on the source document below, then implement the initial system using Google’s Agent Development Kit (ADK), with both Google A2A and Markdown-based inter-agent messaging.
+
+Primary input (read carefully, then keep it open as your source of truth):
+- /Users/ed/King/B2/project map and objectives.md
+
+Key workspace paths to reuse and integrate (avoid duplication):
+- /Users/ed/King/B2/the_Brain/
+- /Users/ed/King/B2/the_Brain/create_brain_tables_corrected.sql
+- /Users/ed/King/B2/the_Brain/recreate_brain_tables.py
+- /Users/ed/King/B2/the_Brain/sql_runner.py
+
+High-level goals:
+- Build the Deos foundation with focus on the first project: Kingdom.
+- Use Google ADK (not Pydantic AI) for agents. Keep design flexible to switch later if needed, but do not implement both in parallel now.
+- Implement dual communication for every agent:
+  1) Google A2A (agent-to-agent) channels
+  2) Markdown message logs and instructions per agent
+- Reuse existing “the_Brain” database assets for memory. Do not duplicate schemas; integrate them.
+- Produce a master plan and then execute it, delivering code, docs, and runnable scripts.
+
+Golden rules and constraints (mandatory):
+- Solve one problem at a time; ship Kingdom first.
+- Prefer simple solutions; avoid introducing new patterns/tech unless necessary.
+- Reuse existing code; avoid duplication.
+- Never delete files. If deprecating anything, move it to a sibling folder named “sandbox” (same directory level).
+- Do not touch or overwrite .env. Create .env.example and read from environment variables only.
+- Keep files ≤ 200–300 lines; refactor if larger.
+- Absolute paths preferred in scripts and docs (e.g., /Users/ed/King/B2/...).
+- Non-interactive commands; if a tool uses a pager, append “| cat”.
+- No chmod changes; shell scripts must be runnable via “sh script.sh”.
+- For backend work, do not open or rely on any browser tooling.
+- Provide short, skimmable progress updates with each change (what you did, what’s next, blockers).
+- Ask questions only when truly blocked (e.g., missing credentials). Otherwise continue.
+
+Your workflow (execute in order, without pausing unless blocked):
+1) Analyze the spec
+   - Read “/Users/ed/King/B2/project map and objectives.md” thoroughly.
+   - Extract actors, agents, hierarchy, communication patterns, memory strategy, integration points (Rocket.Chat, n8n), and risks.
+   - Output a concise understanding summary to “/Users/ed/King/B2/KINGDOM_PLAN.md” (top-level) including:
+     - Scope for Kingdom (MVP → Phase 1 → Phase 2)
+     - Agent hierarchy for Kingdom only (Deos → Kingdom PM → Principal Engineer → Software Developers → Testers → Memory)
+     - Communication approach: A2A channels + Markdown logs
+     - Memory approach: Postgres + vector embeddings (describe minimal implementation plan; reuse “the_Brain” assets)
+     - Non-goals for this phase
+     - Risks, mitigations, and acceptance criteria
+
+2) Plan the initial deliverables
+   - In “KINGDOM_PLAN.md”, list concrete deliverables for Phase 1:
+     - Directory structure
+     - ADK agent skeletons for: Deos, Kingdom Project Manager, Principal Engineer (Zack), Software Developer, Tester, Memory Manager
+     - A2A contracts (message types) and channel setup
+     - Markdown messaging convention and per-agent logs
+     - Minimal memory integration (reuse “the_Brain” SQL and runners)
+     - Run scripts and README
+   - Include a short verification checklist for each deliverable.
+
+3) Scaffold the project (non-destructive)
+   - Create directories (use absolute paths):
+     - /Users/ed/King/B2/kingdom/
+     - /Users/ed/King/B2/kingdom/agents/
+     - /Users/ed/King/B2/kingdom/agents/deos/
+     - /Users/ed/King/B2/kingdom/agents/kingdom_pm/
+     - /Users/ed/King/B2/kingdom/agents/principal_engineer/
+     - /Users/ed/King/B2/kingdom/agents/software_developer/
+     - /Users/ed/King/B2/kingdom/agents/tester/
+     - /Users/ed/King/B2/kingdom/agents/memory_manager/
+     - /Users/ed/King/B2/kingdom/a2a/           (A2A schemas, channel config, helpers)
+     - /Users/ed/King/B2/kingdom/logs/          (global logs)
+     - /Users/ed/King/B2/kingdom/docs/          (local docs)
+   - For each agent, create:
+     - A2A interface stubs (importable message types; no external secrets)
+     - Markdown log file: /agents/<agent_name>/LOG.md
+     - README.md describing the agent role, inputs/outputs, and interactions
+   - Add top-level docs:
+     - /Users/ed/King/B2/kingdom/README.md (overview + how to run)
+     - /Users/ed/King/B2/kingdom/RUNBOOK.md (commands, troubleshooting)
+   - Do not delete or modify anything outside “kingdom/” unless integrating with “the_Brain” per step 5.
+
+4) Implement agents via Google ADK
+   - Add minimal, readable ADK-based skeletons for:
+     - Deos: orchestrates, holds registry of active agents, routes tasks
+     - Kingdom PM: decomposes high-level tasks into steps, assigns to others
+     - Principal Engineer (Zack): produces technical plans, tasks, and code edits
+     - Software Developer: performs scoped edits, writes code, updates logs
+     - Tester: runs validations, lints, SQL checks, and basic health checks
+     - Memory Manager: interfaces the_Brain for read/write and vector ops (stub embeddings if needed)
+   - Each agent must:
+     - Expose A2A handlers (request/response message types under /kingdom/a2a/)
+     - Emit Markdown logs under its /agents/<agent_name>/LOG.md
+     - Keep files ≤ 300 lines; split helper modules as needed
+   - Provide basic task flow:
+     - Deos receives “Kickstart Kingdom” → delegates to Kingdom PM
+     - PM generates Phase 1 task list → routes to Principal Engineer and Memory Manager
+     - Principal Engineer plans code scaffolding → assigns units to Software Developer
+     - Developer creates initial files → Tester runs checks and reports back
+     - PM closes tasks and updates /kingdom/logs/PHASE1_SUMMARY.md
+
+5) Integrate memory with “the_Brain” (minimal, no duplication)
+   - Reuse existing SQL and runners:
+     - /Users/ed/King/B2/the_Brain/create_brain_tables_corrected.sql
+     - /Users/ed/King/B2/the_Brain/recreate_brain_tables.py
+     - /Users/ed/King/B2/the_Brain/sql_runner.py
+   - Provide a thin adapter in “kingdom/agents/memory_manager/” to:
+     - Call “sql_runner.py” for read/write operations
+     - Store/retrieve metadata and vectors (embeddings can be stubbed locally for now)
+   - Do not alter the existing SQL files. If any adjustments are needed, create a sibling “sandbox/” folder near those files and place forked versions there.
+
+6) Dual communication setup
+   - A2A: Define message schemas and lightweight registry for routing. Keep it local (no network secrets). Place definitions under “/kingdom/a2a/”.
+   - Markdown messaging: For each agent, document:
+     - Inputs received (from which agent/task)
+     - Actions taken (with file paths)
+     - Outputs and next steps
+     - Append to the agent’s LOG.md and to a run-level “/kingdom/logs/RUN_LOG.md”.
+
+7) Tooling, scripts, and docs
+   - Create non-interactive shell scripts (run with “sh”):
+     - /Users/ed/King/B2/kingdom/scripts/setup.sh
+       - Install dependencies (ADK, lint, minimal test tools)
+       - Create .env.example (never write .env)
+     - /Users/ed/King/B2/kingdom/scripts/run_phase1.sh
+       - Run Deos → PM → implementation flow
+       - Pipe pagers to “| cat” if needed
+     - /Users/ed/King/B2/kingdom/scripts/test.sh
+       - Lints, type checks, basic SQL connectivity tests via “sql_runner.py”
+   - Update “kingdom/README.md” with:
+     - How to set up env vars (point to .env.example)
+     - How to run Phase 1
+     - How to view agent logs and overall run log
+   - Keep commands absolute-path-friendly in docs and scripts.
+
+8) Verification
+   - Ensure:
+     - All new files lint clean
+     - No file exceeds ~300 lines
+     - A2A message types compile/import fine
+     - Markdown logs are generated as the flow runs
+     - Memory adapter can call “the_Brain/sql_runner.py” successfully with dummy data
+   - Commit changes with clear messages.
+
+9) Report
+   - Write short progress updates in:
+     - /Users/ed/King/B2/kingdom/logs/RUN_LOG.md
+   - Conclude with a brief summary in:
+     - /Users/ed/King/B2/kingdom/logs/PHASE1_SUMMARY.md
+   - If blocked (e.g., missing credentials), explain precisely what you need and why.
+
+Acceptance criteria for this run:
+- “KINGDOM_PLAN.md” exists with clear scope, deliverables, and checklists.
+- “kingdom/” directory scaffolded with agents, A2A, logs, docs, and scripts.
+- ADK agent skeletons compile and can run a minimal end-to-end flow (Deos → PM → PE → Dev → Tester).
+- Markdown logs written per agent and in a run-level log.
+- Memory adapter reuses “the_Brain” without altering original files.
+- No deletion of existing files; any forks go into “sandbox/”.
+- No .env changes; .env.example added.
+
+Begin now. Read the project file, draft “KINGDOM_PLAN.md”, then scaffold and implement Phase 1 end-to-end. Continue autonomously unless blocked.

@@ -1,0 +1,26 @@
+@startuml
+
+title Kingdom Agent System Architecture
+
+class BaseAgent
+class TesterAgent1
+class TesterAgent2  
+class VazirAgent
+class KingdomAgentService
+class TaskQueue
+class A2AMessageBus
+database PostgreSQL
+class TestRunner
+
+BaseAgent <|-- TesterAgent1
+BaseAgent <|-- TesterAgent2
+BaseAgent <|-- VazirAgent
+
+KingdomAgentService --> TaskQueue
+KingdomAgentService --> A2AMessageBus
+
+TesterAgent1 --> PostgreSQL
+TesterAgent2 --> A2AMessageBus
+TestRunner --> KingdomAgentService
+
+@enduml

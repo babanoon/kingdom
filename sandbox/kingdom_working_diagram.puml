@@ -1,0 +1,73 @@
+@startuml Kingdom System
+
+title Kingdom Agent System (Deos) Architecture
+
+skinparam class {
+    BackgroundColor<<working>> lightgreen
+    BackgroundColor<<todo>> black
+    BackgroundColor<<future>> orange  
+    BackgroundColor<<helper>> lightblue
+    FontColor<<todo>> white
+}
+
+class BaseAgent <<working>>
+class GenAIBrain <<working>>
+class AgentHands <<working>>
+
+class KingdomAgentService <<working>>
+class TaskQueue <<working>>
+class A2AMessageBus <<working>>
+class DatabasePool <<working>>
+
+class TesterAgent1 <<working>>
+class TesterAgent2 <<working>>
+class VazirAgent <<working>>
+
+class DataAnalyst <<todo>>
+class ContentCreator <<todo>>
+class ResearchAgent <<future>>
+
+database PostgreSQL <<working>>
+
+class TestRunner <<helper>>
+class SQLRunner <<helper>>
+
+cloud OpenAI <<future>>
+cloud GoogleADK <<todo>>
+
+BaseAgent <|-- TesterAgent1
+BaseAgent <|-- TesterAgent2
+BaseAgent <|-- VazirAgent
+BaseAgent <|-- DataAnalyst
+BaseAgent <|-- ContentCreator
+BaseAgent <|-- ResearchAgent
+
+BaseAgent --> GenAIBrain
+BaseAgent --> AgentHands
+
+KingdomAgentService --> TaskQueue
+KingdomAgentService --> A2AMessageBus
+KingdomAgentService --> DatabasePool
+
+DatabasePool --> PostgreSQL
+GenAIBrain --> OpenAI
+TesterAgent1 --> GoogleADK
+
+TestRunner --> KingdomAgentService
+SQLRunner --> PostgreSQL
+
+note right of TesterAgent1
+FULLY OPERATIONAL
+Database CRUD
+A2A messaging
+Google ADK testing
+end note
+
+note right of PostgreSQL
+Brain Database
+19 Entity Tables
+JSONB flexibility
+Vector-ready
+end note
+
+@enduml

@@ -1,0 +1,89 @@
+@startuml
+title Kingdom Agent System - Complete Architecture
+
+class BaseAgent
+class GenAIBrain
+class AgentHands  
+class KingdomAgentService
+class TaskQueue
+class A2AMessageBus
+class DatabasePool
+
+class TesterAgent1
+class TesterAgent2
+class VazirAgent
+class DataAnalyst
+class ContentCreator
+class ResearchAgent
+
+database PostgreSQL
+
+class TestRunner
+class SQLRunner
+
+cloud OpenAI
+cloud GoogleADK
+
+BaseAgent <|-- TesterAgent1 : inherits
+BaseAgent <|-- TesterAgent2 : inherits
+BaseAgent <|-- VazirAgent : inherits
+BaseAgent <|-- DataAnalyst : inherits
+BaseAgent <|-- ContentCreator : inherits
+BaseAgent <|-- ResearchAgent : inherits
+
+BaseAgent --> GenAIBrain : uses
+BaseAgent --> AgentHands : uses
+
+KingdomAgentService --> TaskQueue : manages
+KingdomAgentService --> A2AMessageBus : manages
+KingdomAgentService --> DatabasePool : manages
+
+TesterAgent1 --> DatabasePool : uses
+TesterAgent2 --> A2AMessageBus : uses
+DatabasePool --> PostgreSQL : connects
+
+GenAIBrain --> OpenAI : API calls
+TesterAgent1 --> GoogleADK : tests
+
+TestRunner --> KingdomAgentService : validates
+SQLRunner --> PostgreSQL : manages
+
+note right of TesterAgent1
+STATUS: WORKING
+- Database operations
+- A2A messaging  
+- Google ADK testing
+- Parallel execution
+end note
+
+note right of TesterAgent2  
+STATUS: WORKING
+- A2A communication
+- Message validation
+- Broadcast testing  
+- Statistics tracking
+end note
+
+note right of VazirAgent
+STATUS: WORKING  
+- GenAI strategic planning
+- Life decision analysis
+- OpenAI integration
+end note
+
+note right of DataAnalyst
+STATUS: TODO
+- Data analysis
+- Insights generation
+- Visualizations
+end note
+
+note right of PostgreSQL
+STATUS: WORKING
+- 19 Entity Tables
+- Universal core fields
+- JSONB flexibility
+- Connection pooling
+end note
+
+@enduml
