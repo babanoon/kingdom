@@ -1,0 +1,239 @@
+Core conventions (for every record)
+
+Use these keys on all entities so they can interlink and rank well in retrieval:
+	•	id (string): stable unique id
+	•	type (enum): "person" | "place" | "event" | ..."
+	•	title (string): short, human label
+	•	aliases (string[]): other names, nicknames, handles
+	•	summary (string): 1–3 sentence gist
+	•	embedding_refs (object): ids to embeddings per modality, e.g. {text, image, audio}
+	•	time (object): {start, end, duration_s, detected_granularity}
+	•	location (object): {geo: {lat, lon, geohash}, address, place_id}
+	•	context_id (string): pointer to a reusable “context” blob (see next)
+	•	tags (string[]): freeform keywords
+	•	salience (float 0–1): personal importance
+	•	emotion (object): {valence:-1..1, arousal:0..1, label}
+	•	confidence (float 0–1): belief in correctness
+	•	source (object): {origin:'manual|email|calendar|device|web', url, file_id, extractor}
+	•	provenance (object): {created_at, updated_at, observed_at, created_by}
+	•	privacy (object): {level:'private|shared|public', retention:'keep|expire|redact', pii:true|false}
+	•	links (object of string[] ids): typed edges like {related_to, caused_by, causes, part_of, member_of, similar_to, same_as}
+	•	access (object): {last_accessed_at, access_count}
+
+Reusable “Context” (attach by context_id)
+
+The brain encodes episodes with rich context. Store it once and reference it everywhere.
+	•	situation: {activity, goal, task_in_focus, mental_load:0..1}
+	•	social: {alone:bool, with:[person_id], roles:{person_id: role}}
+	•	environment: {indoor|outdoor, noise:'low|med|high', light:'dim|bright', temperature_c, weather_id, ambience_notes}
+	•	sensory_cues: {smell, color_palette, music, objects_in_view:[object_id]}
+	•	physiology: {fatigue:0..1, hunger:0..1, pain:0..1}
+	•	devices: {device_id, app, os, location_permission:true|false}
+
+⸻
+
+Categories & rich metadata
+
+1) Person
+	•	names: {given, family, full, display}
+	•	pronouns
+	•	birthdate, age_range
+	•	photos: [image_id], faceprint_id (vector ref)
+	•	voiceprint_id (vector ref)
+	•	contact: {emails, phones, handles, websites}
+	•	timezone, home_base_place_id
+	•	roles: {relationship:'friend|colleague|family|vendor', title, org_id}
+	•	relationship_strength: 0..1 (tie strength)
+	•	first_met_event_id, met_at_place_id
+	•	affiliations: [org_id]
+	•	skills_interests: [{topic, level, evidence}]
+	•	preferences: [{domain:'food|music|work', like|dislike, notes}]
+	•	important_dates: [{label:'birthday|anniversary', date}]
+	•	availability_pattern: {days, hours}
+	•	boundaries: {do_not:[], sensitive_topics:[]}
+	•	last_contacted_at, promises: [{what, due, status}]
+
+2) Organization
+	•	legal_name, aka
+	•	type: company|school|nonprofit|clinic|insurer
+	•	domain, identifiers: {tax_id, npi?, lei?}
+	•	hq_place_id, locations: [place_id]
+	•	people: [{person_id, role}]
+	•	products_services: [{name, category}]
+	•	relations: {subsidiary_of, partners:[org_id], competitors:[org_id]}
+	•	policies: [{subject, url}]
+	•	notes
+
+3) Place
+	•	kind: home|office|cafe|hospital|park|city|country
+	•	geo: {lat, lon, geohash, bbox}
+	•	address, timezone
+	•	owner_org_id|person_id
+	•	amenities: {wifi:'poor|ok|good', outlets:'few|many', seating:'limited|plenty', accessibility:['ramp','elevator']}
+	•	opening_hours, noise, crowding
+	•	safety, price_level
+	•	memories_here: [event_id]
+	•	photos: [image_id]
+	•	map_links: [url]
+
+4) Event
+	•	title, event_type: meeting|call|trip|purchase|medical|milestone|accident|celebration|deadline
+	•	time: {start, end, duration_s, recurrence_id?}
+	•	location: {place_id}
+	•	participants: [{person_id|org_id, role:'host|attendee|speaker'}]
+	•	influencers: [person_id] (who drove it)
+	•	precursors (why): links.caused_by = [event_id]
+	•	consequences (what next): links.causes = [event_id]
+	•	agenda / actions / decisions
+	•	artifacts: [doc_id, media_id, object_id]
+	•	costs: [{amount, currency, payer_id, receipt_media_id}]
+	•	transport: {mode, segments:[{from_place_id, to_place_id, depart_at, arrive_at}]}
+	•	weather_id, photos, transcript_id
+	•	sentiment, stress:0..1, surprise:0..1
+	•	outcome: {success:true|false|null, notes}
+
+5) Conversation / Message
+	•	channel: chat|email|sms|call|meeting_notes
+	•	thread_id, message_id
+	•	participants: [person_id]
+	•	time: {sent_at, received_at}
+	•	content_text_id (points to text blob/embedding)
+	•	topics: [string], entities: [entity_id]
+	•	tone/sentiment, toxicity_flag
+	•	action_items: [{what, owner_id, due, status}]
+	•	commitments: [{promisor_id, promise, due}]
+	•	attachments: [media_id|doc_id]
+	•	followups_event_id
+
+6) Task / Goal
+	•	kind: task|habit|goal|wishlist
+	•	status: todo|doing|blocked|done
+	•	priority: 0..1, urgency: 0..1, value: 0..1
+	•	owner_id, stakeholders: [person_id]
+	•	due_at, estimate_hours, actual_hours
+	•	acceptance_criteria
+	•	dependencies: [task_id]
+	•	evidence_of_done: [event_id|doc_id]
+
+7) Project
+	•	objective, scope, success_metrics
+	•	timeframe: {start, target_end}
+	•	milestones: [{name, due, status}]
+	•	risks: [{risk, likelihood:0..1, impact:0..1, mitigation}]
+	•	resources: [{repo_url, env, dataset_id}]
+	•	stakeholders: [{person_id, role}]
+	•	decision_log: [{date, decision, rationale, by_id}]
+	•	budget: {planned, actual, currency}
+
+8) Object / Artifact (physical)
+	•	category: tool|device|furniture|vehicle|paper|clothing
+	•	make_model, serial, specs
+	•	acquired: {date, price, seller_id, txn_id}
+	•	owner_id, current_location_place_id
+	•	condition, last_service_at, warranty_until
+	•	manual_doc_id, photos
+	•	usage_history: [event_id]
+
+9) Media / Document (digital)
+	•	media_type: pdf|image|audio|video|note|webpage|slide|code
+	•	author_ids, source_url, file_id, hash
+	•	created_at, modified_at
+	•	summary_text_id, key_quotes: [text_span]
+	•	claims: [{claim, stance:'support|refute|neutral', source_doc_id}]
+	•	topics, entities
+	•	reading_progress: {percent, last_opened_at}
+	•	rights/license, share_with: [person_id]
+
+10) Idea / Concept
+	•	definition, analogy, counterexample
+	•	category: theory|pattern|heuristic|design
+	•	examples: [event_id|doc_id]
+	•	related_concepts: [concept_id]
+	•	open_questions: [string]
+	•	applications: [project_id|task_id]
+	•	understanding_level: 0..1, confusion_points: [string]
+	•	origin: {inspired_by:[doc_id|person_id|event_id]}
+
+11) Knowledge / Fact (triple)
+	•	triple: {subject_id|text, predicate, object_id|text}
+	•	scope: personal|world|work
+	•	valid_time: {start, end|null}
+	•	certainty: 0..1, source_doc_id, citation
+	•	derivations: [fact_id] (what this was used to infer)
+
+12) Preference
+	•	domain: food|music|work|travel|communication|shopping|health
+	•	item: e.g., “spice level”, “email vs call”
+	•	like: 0..1, avoid: 0..1
+	•	constraints: allergies|ethics|budget|time
+	•	evidence: [event_id|doc_id]
+	•	stability: 0..1 (how stable over time)
+
+13) Routine / Habit
+	•	behavior: natural language description
+	•	cue: {time_of_day, place_id, emotion}
+	•	frequency: {per_week, schedule}
+	•	streak_days, compliance_rate
+	•	reward: description, costs: {time, money, energy}
+	•	replacement_behavior (if breaking a habit)
+
+14) Health Episode (optional but powerful)
+	•	symptoms: [{name, severity:0..1, onset_at, duration}]
+	•	triggers: [event_id|food|place_id|weather_id]
+	•	reliefs: [medication_id|behavior]
+	•	diagnoses: [{dx, provider_id, date}]
+	•	medications: [{drug, dose, schedule}]
+	•	vitals/labs: [{name, value, unit, date}]
+	•	care_events: [event_id]
+	•	insurer_info: {payer_org_id, claim_id, cost}
+
+15) Travel / Trip
+	•	purpose: work|vacation|family
+	•	segments: [{mode, start_place_id, end_place_id, depart_at, arrive_at, provider_org_id}]
+	•	lodging: {place_id, check_in, check_out, conf_code}
+	•	companions: [person_id]
+	•	itinerary_doc_id, tickets_media_ids
+	•	budget vs actual, photos
+	•	memorable_events: [event_id]
+
+16) Transaction (money/time)
+	•	txn_type: purchase|sale|transfer|subscription|donation|refund
+	•	dt, amount, currency
+	•	counterparty_id (person/org)
+	•	method: card|cash|bank|crypto
+	•	items: [{object_id|desc, qty, unit_price}]
+	•	category: groceries|tools|healthcare|travel|rent|income
+	•	receipt_media_id, warranty_until
+	•	linked_event_id, budget_bucket
+
+17) Device / App Session
+	•	device_id, device_kind, os_version
+	•	app_id, session_start, session_end
+	•	activity: [{event:'call|photo|note', payload_ids:[id]}]
+	•	notifications: count, focus_mode
+	•	privacy: what was shared
+
+18) Time Period (temporal anchor)
+	•	label: “Q3 2025” | “Summer in Spain” | “PhD Year 2”
+	•	time: {start, end}
+	•	theme: work|health|travel|family|learning
+	•	signature_events: [event_id]
+	•	dominant_emotion, highlights, lowlights
+
+
+
+    Standard edge (link) types
+
+Use links to mimic associative recall:
+	•	caused_by / causes (events ⇆ events)
+	•	precedes / follows (temporal order)
+	•	part_of / has_part (project → milestones, event → subevents)
+	•	located_in (anything → place)
+	•	attended_by / hosted_by (event ⇆ person/org)
+	•	owns / owned_by (person/org ⇆ object)
+	•	authored_by (doc ⇆ person)
+	•	about (doc/message ⇆ concept/person/org)
+	•	similar_to (embedding similarity neighborhoods)
+	•	same_as (dedup canonicalization)
+	•	helps_with / blocks (task ⇆ task/project)
+	•	promised_in (commitment ⇆ conversation/event)

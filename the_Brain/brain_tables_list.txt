@@ -1,0 +1,26 @@
+# Brain Database Tables
+# List of all Brain-related tables for deletion/management
+# Lines starting with # are comments and will be ignored
+
+# Entity tables (order matters for dependencies)
+persons
+organizations
+places
+events
+conversations
+tasks
+projects
+objects
+media_documents
+ideas
+knowledge_facts
+preferences
+routines
+health_episodes
+travels
+transactions
+device_sessions
+time_periods
+
+# Support tables
+contexts

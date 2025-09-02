@@ -1,0 +1,19 @@
+{
+  "database": {
+    "host": "localhost",
+    "port": 9876,
+    "database": "general2613",
+    "user": "kadmin",
+    "password": "securepasswordkossher123"
+  },
+  "settings": {
+    "auto_commit": true,
+    "verbose": true,
+    "stop_on_error": false,
+    "show_progress": true
+  },
+  "paths": {
+    "sql_files_dir": "/Users/ed/king/n8n_dev/the_Brain",
+    "logs_dir": "/Users/ed/king/n8n_dev/the_Brain/logs"
+  }
+}
