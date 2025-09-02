@@ -1,0 +1,8 @@
+I hope the instructions that we have put in the universal documentation that Markdown is enough for understanding what this whole kingdom system is about and what are the tasks that it should do the kingdom system is a series of hierarchically arranged AI agents these AI agents have several tools for accomplishing tasks. 
+
+As I have said before, these agents can be seen like a family of people or a robots. 
+
+There are at least three types of agents:
+
+1. The agents that are are only plannars and managers. 
+2. The agents that do both planning and 
