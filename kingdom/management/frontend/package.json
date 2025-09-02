@@ -1,0 +1,35 @@
+{
+  "name": "kingdom-management-frontend",
+  "version": "1.0.0",
+  "description": "Kingdom Management System Frontend Dashboard",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.1",
+    "d3": "^7.8.2",
+    "axios": "^1.3.4",
+    "@mui/material": "^5.11.10",
+    "@mui/icons-material": "^5.11.9",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "recharts": "^2.5.0",
+    "react-flow-renderer": "^10.3.17"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@types/d3": "^7.4.0",
+    "@vitejs/plugin-react": "^3.1.0",
+    "typescript": "^4.9.3",
+    "vite": "^4.1.0",
+    "eslint": "^8.35.0"
+  },
+  "proxy": "http://localhost:8765"
+}

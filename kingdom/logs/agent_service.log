@@ -1,0 +1,77 @@
+2025-09-01 22:39:14,111 - root - INFO - 🚀 Starting Kingdom Agent Service
+2025-09-01 22:39:14,314 - root - INFO - Agent tester1_001 subscribed to A2A message bus
+2025-09-01 22:39:14,315 - agent.tester1_001 - INFO - Agent tester1_001 initialized for service
+2025-09-01 22:39:14,318 - agent.tester1_001 - INFO - Test table agent_test_data ready
+2025-09-01 22:39:14,318 - agent.tester1_001 - INFO - Tester1 tester1_001 ready for database operations
+2025-09-01 22:39:14,318 - root - INFO - Started agent: tester1_001
+2025-09-01 22:39:14,319 - root - INFO - Agent tester1_002 subscribed to A2A message bus
+2025-09-01 22:39:14,319 - agent.tester1_002 - INFO - Agent tester1_002 initialized for service
+2025-09-01 22:39:14,324 - agent.tester1_002 - INFO - Test table agent_test_data ready
+2025-09-01 22:39:14,324 - agent.tester1_002 - INFO - Tester1 tester1_002 ready for database operations
+2025-09-01 22:39:14,324 - root - INFO - Started agent: tester1_002
+2025-09-01 22:39:14,324 - root - INFO - Agent tester2_001 subscribed to A2A message bus
+2025-09-01 22:39:14,324 - agent.tester2_001 - INFO - Agent tester2_001 initialized for service
+2025-09-01 22:39:14,324 - root - INFO - Started agent: tester2_001
+2025-09-01 22:39:14,324 - root - INFO - Agent tester2_002 subscribed to A2A message bus
+2025-09-01 22:39:14,324 - agent.tester2_002 - INFO - Agent tester2_002 initialized for service
+2025-09-01 22:39:14,324 - root - INFO - Started agent: tester2_002
+2025-09-01 22:39:14,460 - root - INFO - Agent general_receiver_001 subscribed to A2A message bus
+2025-09-01 22:39:14,461 - agent.general_receiver_001 - INFO - Agent general_receiver_001 initialized for service
+2025-09-01 22:39:14,461 - root - INFO - Started agent: general_receiver_001
+2025-09-01 22:39:14,491 - root - INFO - Agent general_receiver_002 subscribed to A2A message bus
+2025-09-01 22:39:14,491 - agent.general_receiver_002 - INFO - Agent general_receiver_002 initialized for service
+2025-09-01 22:39:14,491 - root - INFO - Started agent: general_receiver_002
+2025-09-01 22:39:14,507 - root - INFO - Agent math_calculator_001 subscribed to A2A message bus
+2025-09-01 22:39:14,507 - agent.math_calculator_001 - INFO - Agent math_calculator_001 initialized for service
+2025-09-01 22:39:14,507 - root - INFO - Started agent: math_calculator_001
+2025-09-01 22:39:14,523 - root - INFO - Agent math_calculator_002 subscribed to A2A message bus
+2025-09-01 22:39:14,523 - agent.math_calculator_002 - INFO - Agent math_calculator_002 initialized for service
+2025-09-01 22:39:14,523 - root - INFO - Started agent: math_calculator_002
+2025-09-01 22:39:14,523 - root - INFO - ✅ Kingdom Agent Service started successfully
+2025-09-01 22:39:14,523 - root - INFO - Task queued: task_20250901_223914_523776 (process_chat_message)
+2025-09-01 22:39:14,523 - root - INFO - Task submitted: task_20250901_223914_523776 (process_chat_message) -> general_receiver_001
+2025-09-01 22:39:14,523 - agent.tester1_001 - INFO - Agent tester1_001 starting service loop
+2025-09-01 22:39:14,523 - root - INFO - Task queued: task_20250901_223914_523776 (process_chat_message)
+2025-09-01 22:39:14,524 - agent.tester1_002 - INFO - Agent tester1_002 starting service loop
+2025-09-01 22:39:14,524 - root - INFO - Task queued: task_20250901_223914_523776 (process_chat_message)
+2025-09-01 22:39:14,524 - agent.tester2_001 - INFO - Agent tester2_001 starting service loop
+2025-09-01 22:39:14,524 - root - INFO - Task queued: task_20250901_223914_523776 (process_chat_message)
+2025-09-01 22:39:14,524 - agent.tester2_002 - INFO - Agent tester2_002 starting service loop
+2025-09-01 22:39:14,524 - root - INFO - Task queued: task_20250901_223914_523776 (process_chat_message)
+2025-09-01 22:39:14,524 - agent.general_receiver_001 - INFO - Agent general_receiver_001 starting service loop
+2025-09-01 22:39:14,524 - agent.general_receiver_001 - INFO - Processing task: task_20250901_223914_523776 (process_chat_message)
+2025-09-01 22:39:14,524 - agent.general_receiver_001 - INFO - Processing process_chat_message with payload: {'sender': 'test_user', 'receiver': 'kingdom', 'forum': 'general_help', 'message': 'Hello', 'workflow_id': 'test_workflow'}
+2025-09-01 22:39:14,524 - agent.general_receiver_001 - INFO - Processing chat message from test_user in general_help: Hello
+2025-09-01 22:39:14,629 - agent.general_receiver_002 - INFO - Agent general_receiver_002 starting service loop
+2025-09-01 22:39:14,629 - agent.math_calculator_001 - INFO - Agent math_calculator_001 starting service loop
+2025-09-01 22:39:14,633 - agent.math_calculator_002 - INFO - Agent math_calculator_002 starting service loop
+2025-09-01 22:39:15,426 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-01 22:39:15,453 - agent.general_receiver_001 - ERROR - Error processing chat message: 'max_conversation_history'
+2025-09-01 22:39:15,454 - agent.general_receiver_001 - INFO - Task completed: task_20250901_223914_523776
+2025-09-01 22:39:15,554 - root - INFO - Task task_20250901_223914_523776 completed successfully
+2025-09-01 22:39:15,554 - root - INFO - 🛑 Stopping Kingdom Agent Service
+2025-09-01 22:39:15,554 - root - INFO - Agent tester1_001 unsubscribed from A2A message bus
+2025-09-01 22:39:15,555 - agent.tester1_001 - INFO - Agent tester1_001 stopped
+2025-09-01 22:39:15,555 - root - INFO - Stopped agent: tester1_001
+2025-09-01 22:39:15,555 - root - INFO - Agent tester1_002 unsubscribed from A2A message bus
+2025-09-01 22:39:15,555 - agent.tester1_002 - INFO - Agent tester1_002 stopped
+2025-09-01 22:39:15,555 - root - INFO - Stopped agent: tester1_002
+2025-09-01 22:39:15,555 - root - INFO - Agent tester2_001 unsubscribed from A2A message bus
+2025-09-01 22:39:15,555 - agent.tester2_001 - INFO - Agent tester2_001 stopped
+2025-09-01 22:39:15,555 - root - INFO - Stopped agent: tester2_001
+2025-09-01 22:39:15,555 - root - INFO - Agent tester2_002 unsubscribed from A2A message bus
+2025-09-01 22:39:15,555 - agent.tester2_002 - INFO - Agent tester2_002 stopped
+2025-09-01 22:39:15,555 - root - INFO - Stopped agent: tester2_002
+2025-09-01 22:39:15,555 - root - INFO - Agent general_receiver_001 unsubscribed from A2A message bus
+2025-09-01 22:39:15,555 - agent.general_receiver_001 - INFO - Agent general_receiver_001 stopped
+2025-09-01 22:39:15,555 - root - INFO - Stopped agent: general_receiver_001
+2025-09-01 22:39:15,555 - root - INFO - Agent general_receiver_002 unsubscribed from A2A message bus
+2025-09-01 22:39:15,555 - agent.general_receiver_002 - INFO - Agent general_receiver_002 stopped
+2025-09-01 22:39:15,555 - root - INFO - Stopped agent: general_receiver_002
+2025-09-01 22:39:15,555 - root - INFO - Agent math_calculator_001 unsubscribed from A2A message bus
+2025-09-01 22:39:15,555 - agent.math_calculator_001 - INFO - Agent math_calculator_001 stopped
+2025-09-01 22:39:15,555 - root - INFO - Stopped agent: math_calculator_001
+2025-09-01 22:39:15,555 - root - INFO - Agent math_calculator_002 unsubscribed from A2A message bus
+2025-09-01 22:39:15,555 - agent.math_calculator_002 - INFO - Agent math_calculator_002 stopped
+2025-09-01 22:39:15,555 - root - INFO - Stopped agent: math_calculator_002
+2025-09-01 22:39:15,555 - root - INFO - ✅ Kingdom Agent Service stopped

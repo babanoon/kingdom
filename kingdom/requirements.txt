@@ -1,0 +1,18 @@
+# Kingdom Agent System Dependencies
+
+# Core dependencies
+asyncio
+python-dotenv
+psycopg2-binary
+openai>=1.0.0
+
+# Optional dependencies for specialized hands
+aiohttp
+requests
+numpy
+pandas
+
+# Development dependencies (optional)
+pytest
+black
+flake8

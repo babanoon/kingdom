@@ -1,0 +1,229 @@
+{
+  "agent_info": {
+    "name": "MathCalculator",
+    "version": "1.0.0",
+    "description": "Specialized mathematical problem solver with Gemini AI + Python execution",
+    "author": "Kingdom Agent System", 
+    "created_date": "2025-09-01",
+    "agent_type": "math_calculator"
+  },
+  
+  "runtime_configuration": {
+    "max_solution_history": 20,
+    "execution_timeout": 60,
+    "enable_visualization": true,
+    "precision_digits": 10,
+    "safety_level": "high"
+  },
+  
+  "genai_configuration": {
+    "primary_provider": "gemini",
+    "fallback_provider": "openai",
+    "temperature": 0.3,
+    "max_tokens": 2000,
+    "thinking_modes": ["analytical", "critical", "educational", "creative"],
+    "personality_profile": {
+      "role": "Mathematical Problem Solver and Calculator",
+      "traits": ["precise", "methodical", "educational", "accurate"],
+      "expertise": ["algebra", "calculus", "statistics", "geometry", "finance"]
+    }
+  },
+  
+  "mathematical_configuration": {
+    "supported_problem_types": [
+      "arithmetic",
+      "algebra", 
+      "calculus",
+      "statistics",
+      "geometry",
+      "finance",
+      "linear_algebra",
+      "number_theory"
+    ],
+    "complexity_levels": ["basic", "intermediate", "advanced"],
+    "default_precision": 10,
+    "enable_symbolic_math": true,
+    "enable_numerical_methods": true
+  },
+  
+  "code_execution_configuration": {
+    "allowed_imports": [
+      "math",
+      "numpy",
+      "scipy", 
+      "sympy",
+      "matplotlib",
+      "pandas",
+      "statistics",
+      "decimal",
+      "fractions",
+      "cmath",
+      "random"
+    ],
+    "execution_environment": "sandbox",
+    "timeout_seconds": 60,
+    "memory_limit_mb": 256,
+    "enable_plotting": true,
+    "plot_format": "png",
+    "max_plot_points": 1000
+  },
+  
+  "problem_classification": {
+    "arithmetic": {
+      "keywords": ["add", "subtract", "multiply", "divide", "calculate", "compute", "percent", "percentage"],
+      "complexity": "basic",
+      "requires_code": false,
+      "typical_libraries": ["math"]
+    },
+    "algebra": {
+      "keywords": ["solve", "equation", "variable", "x", "y", "polynomial", "quadratic", "linear"],
+      "complexity": "intermediate",
+      "requires_code": true,
+      "typical_libraries": ["sympy", "numpy"]
+    },
+    "calculus": {
+      "keywords": ["derivative", "integral", "limit", "calculus", "differentiate", "integrate", "optimization"],
+      "complexity": "advanced",
+      "requires_code": true,
+      "typical_libraries": ["sympy", "scipy"]
+    },
+    "statistics": {
+      "keywords": ["mean", "median", "mode", "standard deviation", "probability", "distribution", "regression"],
+      "complexity": "intermediate",
+      "requires_code": true,
+      "typical_libraries": ["statistics", "numpy", "scipy"]
+    },
+    "geometry": {
+      "keywords": ["area", "volume", "perimeter", "angle", "triangle", "circle", "rectangle", "sphere"],
+      "complexity": "intermediate",
+      "requires_code": true,
+      "typical_libraries": ["math", "matplotlib"]
+    },
+    "finance": {
+      "keywords": ["interest", "compound", "loan", "investment", "present value", "future value", "annuity"],
+      "complexity": "intermediate",
+      "requires_code": true,
+      "typical_libraries": ["numpy", "math"]
+    }
+  },
+  
+  "visualization_configuration": {
+    "enable_automatic_plots": true,
+    "plot_triggers": ["graph", "plot", "function", "equation", "data", "distribution"],
+    "default_plot_size": [10, 6],
+    "plot_style": "seaborn",
+    "color_palette": "viridis",
+    "save_plots": false,
+    "show_grid": true,
+    "include_labels": true
+  },
+  
+  "mathematical_constants": {
+    "basic": {
+      "pi": 3.141592653589793,
+      "e": 2.718281828459045,
+      "tau": 6.283185307179586,
+      "golden_ratio": 1.618033988749895
+    },
+    "roots": {
+      "sqrt2": 1.4142135623730951,
+      "sqrt3": 1.7320508075688772,
+      "sqrt5": 2.23606797749979
+    },
+    "special": {
+      "euler_gamma": 0.5772156649015329,
+      "catalan": 0.9159655941772190,
+      "apery": 1.2020569031595942
+    }
+  },
+  
+  "validation_configuration": {
+    "enable_auto_validation": true,
+    "validation_methods": ["substitution", "numerical_check", "dimensional_analysis"],
+    "tolerance": 1e-10,
+    "require_verification": true,
+    "check_edge_cases": true
+  },
+  
+  "communication_configuration": {
+    "response_format": "structured",
+    "include_code_in_response": true,
+    "show_steps_by_default": true,
+    "explain_methodology": true,
+    "include_verification": true,
+    "educational_explanations": true
+  },
+  
+  "integration_configuration": {
+    "supported_input_formats": ["text", "latex", "wolfram", "json"],
+    "routing_integration": {
+      "accepts_from": ["general_receiver", "vazir", "data_analyst"],
+      "routes_to": ["visualization_agent", "validation_agent"],
+      "collaboration_types": ["verification", "explanation", "extension"]
+    }
+  },
+  
+  "performance_configuration": {
+    "max_concurrent_problems": 5,
+    "cache_solutions": true,
+    "cache_ttl_minutes": 60,
+    "enable_metrics": true,
+    "track_accuracy": true,
+    "measure_execution_time": true
+  },
+  
+  "safety_configuration": {
+    "code_sandboxing": true,
+    "restricted_functions": ["eval", "exec", "open", "file", "__import__"],
+    "memory_monitoring": true,
+    "execution_limits": {
+      "max_loops": 1000,
+      "max_recursion": 100,
+      "max_memory_mb": 256
+    },
+    "input_validation": {
+      "max_expression_length": 1000,
+      "forbidden_patterns": ["__", "import os", "subprocess"],
+      "sanitize_latex": true
+    }
+  },
+  
+  "educational_configuration": {
+    "provide_learning_resources": true,
+    "explain_concepts": true,
+    "show_alternative_methods": false,
+    "difficulty_adaptation": true,
+    "progress_tracking": false,
+    "concept_prerequisites": {
+      "calculus": ["algebra", "functions"],
+      "statistics": ["arithmetic", "basic_probability"],
+      "linear_algebra": ["algebra", "geometry"]
+    }
+  },
+  
+  "error_handling_configuration": {
+    "graceful_degradation": true,
+    "partial_solutions": true,
+    "error_explanations": true,
+    "suggest_corrections": true,
+    "fallback_methods": ["numerical_approximation", "simplified_analysis"],
+    "retry_strategies": ["different_method", "reduced_precision", "step_by_step"]
+  },
+  
+  "monitoring_configuration": {
+    "log_all_problems": true,
+    "track_success_rate": true,
+    "monitor_execution_time": true,
+    "alert_thresholds": {
+      "execution_time_seconds": 30,
+      "memory_usage_mb": 200,
+      "error_rate_percent": 10
+    },
+    "performance_metrics": [
+      "problems_solved_per_hour",
+      "average_accuracy",
+      "average_execution_time",
+      "success_rate_by_type"
+    ]
+  }
+}

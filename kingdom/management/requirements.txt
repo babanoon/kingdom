@@ -1,0 +1,27 @@
+# Kingdom Management System Dependencies
+
+# FastAPI and web server
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+websockets>=12.0
+
+# HTTP and async support
+aiohttp>=3.9.0
+asyncio-mqtt>=0.16.0
+
+# Data validation and serialization
+pydantic>=2.5.0
+
+# Database integration (inherits from Kingdom core)
+psycopg2-binary>=2.9.0
+asyncpg>=0.29.0
+
+# Logging and monitoring
+structlog>=23.2.0
+
+# Development and testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+
+# Inherit core Kingdom dependencies
+-r ../requirements.txt

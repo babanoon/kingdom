@@ -1,0 +1,276 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GeneralReceiver Agent Schema",
+  "description": "JSON schemas for GeneralReceiver agent inputs, outputs, and configuration",
+  
+  "definitions": {
+    "ChatMessageInput": {
+      "type": "object",
+      "properties": {
+        "sender": {
+          "type": "string",
+          "description": "ID or name of the message sender",
+          "minLength": 1
+        },
+        "receiver": {
+          "type": "string", 
+          "description": "ID or name of the intended receiver",
+          "minLength": 1
+        },
+        "forum": {
+          "type": "string",
+          "description": "Channel, room, or forum where the conversation takes place",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "description": "The actual message content",
+          "minLength": 1
+        },
+        "workflow_id": {
+          "type": "string",
+          "description": "Optional workflow tracking ID",
+          "pattern": "^workflow_[0-9]{8}_[0-9]{6}_[a-zA-Z0-9]{8}$"
+        },
+        "context": {
+          "type": "object",
+          "description": "Additional context information",
+          "properties": {
+            "conversation_id": {"type": "string"},
+            "user_preferences": {"type": "object"},
+            "system_context": {"type": "object"}
+          }
+        }
+      },
+      "required": ["sender", "message"],
+      "additionalProperties": false
+    },
+    
+    "GeneralQuestionInput": {
+      "type": "object",
+      "properties": {
+        "question": {
+          "type": "string",
+          "description": "The question to be answered",
+          "minLength": 1
+        },
+        "context": {
+          "type": "object",
+          "description": "Additional context for the question",
+          "properties": {
+            "topic": {"type": "string"},
+            "difficulty_level": {"type": "string", "enum": ["basic", "intermediate", "advanced"]},
+            "preferred_format": {"type": "string", "enum": ["brief", "detailed", "structured"]}
+          }
+        }
+      },
+      "required": ["question"],
+      "additionalProperties": false
+    },
+    
+    "ChatMessageOutput": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "description": "Whether the request was processed successfully"
+        },
+        "response": {
+          "type": "string",
+          "description": "The agent's response to the message"
+        },
+        "agent_id": {
+          "type": "string",
+          "description": "ID of the agent that processed the request"
+        },
+        "processing_time_ms": {
+          "type": "number",
+          "description": "Time taken to process the request in milliseconds"
+        },
+        "workflow_id": {
+          "type": "string",
+          "description": "Workflow tracking ID if applicable"
+        },
+        "routed": {
+          "type": "boolean",
+          "description": "Whether the request was routed to a specialist agent"
+        },
+        "target_agent": {
+          "type": "string",
+          "description": "ID of the agent the request was routed to (if routed)"
+        },
+        "error": {
+          "type": "string",
+          "description": "Error message if success is false"
+        }
+      },
+      "required": ["success", "agent_id"],
+      "additionalProperties": false
+    },
+    
+    "RoutingDecision": {
+      "type": "object",
+      "properties": {
+        "should_route": {
+          "type": "boolean",
+          "description": "Whether the message should be routed to a specialist"
+        },
+        "category": {
+          "type": "string",
+          "description": "Category of specialization needed",
+          "enum": ["mathematical", "database", "testing", "general"]
+        },
+        "target_agent": {
+          "type": "string",
+          "description": "ID of the target agent for routing"
+        },
+        "confidence": {
+          "type": "number",
+          "description": "Confidence score for the routing decision (0.0 to 1.0)",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "keywords_matched": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "List of keywords that triggered the routing decision"
+        }
+      },
+      "required": ["should_route"],
+      "additionalProperties": false
+    },
+    
+    "ConversationHistoryItem": {
+      "type": "object",
+      "properties": {
+        "sender": {
+          "type": "string",
+          "description": "ID of the message sender"
+        },
+        "message": {
+          "type": "string", 
+          "description": "The original message"
+        },
+        "response": {
+          "type": "string",
+          "description": "The agent's response"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of the interaction"
+        },
+        "routed": {
+          "type": "boolean",
+          "description": "Whether this message was routed to another agent"
+        },
+        "workflow_id": {
+          "type": "string",
+          "description": "Associated workflow ID if applicable"
+        }
+      },
+      "required": ["sender", "message", "response", "timestamp"],
+      "additionalProperties": false
+    },
+    
+    "AgentConfiguration": {
+      "type": "object",
+      "properties": {
+        "max_conversation_history": {
+          "type": "integer",
+          "description": "Maximum number of conversation items to keep in memory",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 10
+        },
+        "response_timeout": {
+          "type": "integer",
+          "description": "Maximum time in seconds to wait for AI response",
+          "minimum": 5,
+          "maximum": 120,
+          "default": 30
+        },
+        "enable_routing": {
+          "type": "boolean",
+          "description": "Whether to enable automatic routing to specialist agents",
+          "default": true
+        },
+        "safety_level": {
+          "type": "string",
+          "enum": ["low", "medium", "high"],
+          "description": "Level of content safety filtering",
+          "default": "medium"
+        },
+        "gemini_model": {
+          "type": "string",
+          "description": "Gemini model to use for AI responses",
+          "default": "gemini-pro"
+        },
+        "routing_confidence_threshold": {
+          "type": "number",
+          "description": "Minimum confidence required for automatic routing",
+          "minimum": 0.1,
+          "maximum": 1.0,
+          "default": 0.7
+        }
+      },
+      "additionalProperties": false
+    },
+    
+    "A2AMessage": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["routed_request", "specialist_response", "status_request", "status_response"],
+          "description": "Type of A2A message"
+        },
+        "payload": {
+          "type": "object",
+          "description": "Message payload - structure depends on message type"
+        },
+        "return_address": {
+          "type": "string",
+          "description": "Agent ID to send response back to"
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["low", "normal", "high", "urgent"],
+          "default": "normal",
+          "description": "Message priority level"
+        },
+        "correlation_id": {
+          "type": "string",
+          "description": "ID to correlate request and response messages"
+        }
+      },
+      "required": ["type", "payload"],
+      "additionalProperties": false
+    }
+  },
+  
+  "properties": {
+    "input_schemas": {
+      "type": "object",
+      "properties": {
+        "chat_message": {"$ref": "#/definitions/ChatMessageInput"},
+        "general_question": {"$ref": "#/definitions/GeneralQuestionInput"}
+      }
+    },
+    
+    "output_schemas": {
+      "type": "object", 
+      "properties": {
+        "chat_response": {"$ref": "#/definitions/ChatMessageOutput"},
+        "routing_decision": {"$ref": "#/definitions/RoutingDecision"},
+        "conversation_history": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ConversationHistoryItem"}
+        }
+      }
+    },
+    
+    "configuration_schema": {"$ref": "#/definitions/AgentConfiguration"},
+    "a2a_message_schema": {"$ref": "#/definitions/A2AMessage"}
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "agent_info": {
+    "name": "GeneralReceiver",
+    "version": "1.0.0",
+    "description": "General-purpose AI agent for Q&A and message routing",
+    "author": "Kingdom Agent System",
+    "created_date": "2025-09-01",
+    "agent_type": "general_receiver"
+  },
+  
+  "runtime_configuration": {
+    "max_conversation_history": 10,
+    "response_timeout": 30,
+    "enable_routing": true,
+    "safety_level": "medium",
+    "gemini_model": "gemini-pro",
+    "routing_confidence_threshold": 0.7
+  },
+  
+  "genai_configuration": {
+    "primary_provider": "gemini",
+    "fallback_provider": "openai",
+    "temperature": 0.7,
+    "max_tokens": 1000,
+    "thinking_modes": ["conversational", "analytical", "creative"],
+    "personality_profile": {
+      "role": "General Assistant and Message Router",
+      "traits": ["helpful", "friendly", "professional", "contextual"],
+      "expertise": ["general_knowledge", "conversation_management", "routing"]
+    }
+  },
+  
+  "routing_configuration": {
+    "enable_automatic_routing": true,
+    "routing_rules": {
+      "mathematical": {
+        "keywords": ["calculate", "math", "equation", "solve", "compute", "formula", "algebra", "geometry", "statistics"],
+        "target_agent_type": "math_calculator",
+        "confidence_threshold": 0.7,
+        "priority": "normal"
+      },
+      "database": {
+        "keywords": ["database", "sql", "query", "data", "table", "select", "insert", "update", "delete"],
+        "target_agent_type": "tester1",
+        "confidence_threshold": 0.8,
+        "priority": "normal"
+      },
+      "testing": {
+        "keywords": ["test", "validation", "check", "verify", "quality", "debugging", "QA"],
+        "target_agent_type": "tester2",
+        "confidence_threshold": 0.8,
+        "priority": "normal"
+      },
+      "strategic": {
+        "keywords": ["plan", "strategy", "decision", "analyze", "recommend", "approach"],
+        "target_agent_type": "vazir",
+        "confidence_threshold": 0.6,
+        "priority": "high"
+      }
+    }
+  },
+  
+  "communication_configuration": {
+    "supported_input_formats": ["text", "json", "markdown"],
+    "default_output_format": "text",
+    "enable_a2a_messaging": true,
+    "enable_webhook_responses": true,
+    "response_templates": {
+      "greeting": "Hello! I'm here to help you with any questions or tasks. What can I assist you with today?",
+      "routing": "I'll connect you with our {specialist} specialist who can better handle {request_type} questions.",
+      "error": "I apologize, but I encountered an issue processing your request. Please try again or rephrase your question.",
+      "clarification": "Could you please provide more details about {topic}? This will help me give you a better response.",
+      "completion": "I've completed processing your request. Is there anything else you'd like to know?"
+    }
+  },
+  
+  "integration_configuration": {
+    "supported_platforms": ["rocket_chat", "management_api", "webhook", "a2a"],
+    "webhook_endpoints": {
+      "incoming_message": "/api/chat",
+      "status_check": "/health"
+    },
+    "database_integration": {
+      "enable_conversation_logging": true,
+      "log_table": "conversations",
+      "enable_analytics": true
+    }
+  },
+  
+  "performance_configuration": {
+    "max_concurrent_requests": 10,
+    "cache_responses": true,
+    "cache_ttl_seconds": 300,
+    "enable_metrics_collection": true,
+    "log_level": "INFO"
+  },
+  
+  "security_configuration": {
+    "input_sanitization": true,
+    "output_filtering": true,
+    "rate_limiting": {
+      "enabled": true,
+      "max_requests_per_minute": 60,
+      "burst_allowance": 10
+    },
+    "content_safety": {
+      "enabled": true,
+      "filter_level": "medium",
+      "blocked_categories": ["harmful", "illegal", "spam"]
+    }
+  },
+  
+  "monitoring_configuration": {
+    "enable_health_checks": true,
+    "health_check_interval": 30,
+    "enable_performance_tracking": true,
+    "alert_thresholds": {
+      "response_time_ms": 5000,
+      "error_rate_percent": 5,
+      "memory_usage_mb": 500
+    }
+  },
+  
+  "experimental_features": {
+    "enable_context_learning": false,
+    "enable_user_personalization": false,
+    "enable_advanced_routing": false
+  }
+}

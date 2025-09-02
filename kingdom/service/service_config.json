@@ -1,0 +1,16 @@
+{
+    "service_name": "Kingdom Tester Agent Service",
+    "max_workers": 20,
+    "database": {
+        "host": "localhost",
+        "port": 9876,
+        "database": "general2613",
+        "user": "kadmin",
+        "password": "securepasswordkossher123"
+    },
+    "db_pool_size": 10,
+    "agent_types": ["tester1", "tester2", "general_receiver", "math_calculator"],
+    "agents_per_type": 2,
+    "task_timeout": 300,
+    "log_level": "INFO"
+}

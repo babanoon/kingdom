@@ -1,0 +1,30 @@
+{
+  "system_name": "Kingdom (Deos)",
+  "version": "1.0.0",
+  "database": {
+    "host": "localhost",
+    "port": 9876,
+    "database": "general2613",
+    "user": "kadmin",
+    "password": "securepasswordkossher123"
+  },
+  "agents": {
+    "auto_start": [
+      "vazir"
+    ],
+    "max_agents": 50
+  },
+  "communication": {
+    "workspace_path": "./kingdom/workspace",
+    "enable_markdown": true,
+    "enable_rocketchat": true
+  },
+  "security": {
+    "default_level": "standard",
+    "audit_logging": true
+  },
+  "memory": {
+    "enable_vector_search": true,
+    "cache_size": 1000
+  }
+}
